@@ -1,0 +1,663 @@
+openapi: 3.0.3
+info:
+  title: Shopping Cart API
+  description: Secure API-First Shopping Cart Service adhering to Hexagonal Architecture constraints.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Local Server
+
+paths:
+  /users:
+    post:
+      summary: Create a user
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+    get:
+      summary: List all users
+      operationId: listUsers
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - name: limit
+          in: query
+          description: How many users to return at one time
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponse'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+
+  /users/{userId}:
+    get:
+      summary: Get user by ID
+      operationId: getUserById
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: User details found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+    put:
+      summary: Update user details
+      operationId: updateUser
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+    delete:
+      summary: Delete a user
+      operationId: deleteUser
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: User deleted successfully
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+
+  /products:
+    post:
+      summary: Create a product
+      operationId: createProduct
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        '201':
+          description: Product created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+    get:
+      summary: List all products
+      operationId: listProducts
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - name: limit
+          in: query
+          description: How many products to return at one time
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: A list of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductResponse'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+
+  /products/{productId}:
+    get:
+      summary: Get product by ID
+      operationId: getProductById
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Product details found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+    put:
+      summary: Update a product
+      operationId: updateProduct
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        '200':
+          description: Product updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+    delete:
+      summary: Delete a product
+      operationId: deleteProduct
+      security:
+        - BearerAuth: [ ]
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Product deleted successfully
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+
+  /users/{userId}/history/top-expensive:
+    get:
+      summary: Fetch top 4 most expensive single products purchased historically by user
+      operationId: getTopExpensivePurchases
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Array of top 4 expensive items purchased
+          content:
+            application/json:
+              schema:
+                type: array
+                maxItems: 4
+                items:
+                  $ref: '#/components/schemas/ProductResponse'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+
+  /carts:
+    post:
+      summary: Initialize a new shopping cart
+      operationId: createCart
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartCreationRequest'
+      responses:
+        '201':
+          description: Cart created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartResponse'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+
+  /carts/{cartId}:
+    get:
+      summary: Get cart state with computed pricing rules
+      operationId: getCart
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Detailed cart details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartResponse'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+    delete:
+      summary: Clear or delete a cart
+      operationId: deleteCart
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Cart deleted successfully
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+
+  /carts/{cartId}/items:
+    post:
+      summary: Add an item to the cart
+      operationId: addItemToCart
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartItemRequest'
+      responses:
+        '200':
+          description: Item added or updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartResponse'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+
+  /carts/{cartId}/items/{productId}:
+    delete:
+      summary: Remove a product completely or decrease quantity from cart
+      operationId: removeItemFromCart
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Item removed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartResponse'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+
+  /carts/{cartId}/checkout:
+    post:
+      summary: Finalize cart and persist to historical purchase data
+      operationId: checkoutCart
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Checkout finalized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckoutResponse'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Secure all routes using a validated JWT Token.
+
+  responses:
+    400BadRequest:
+      description: Invalid request payloads or schema errors.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    401Unauthorized:
+      description: Authorization header missing or validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    404NotFound:
+      description: Requested domain entity could not be found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+    500InternalServerError:
+      description: Internal Server Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+
+  schemas:
+    ErrorModel:
+      type: object
+      required: [code, message, timestamp]
+      additionalProperties: false
+      properties:
+        code:
+          type: integer
+          minimum: 400
+          maximum: 599
+        message:
+          type: string
+          maxLength: 255
+          pattern: '^[a-zA-Z0-9 ]+$'
+        timestamp:
+          type: string
+          format: date-time
+
+    UserRequest:
+      type: object
+      required: [username, userType]
+      additionalProperties: false
+      properties:
+        username:
+          type: string
+          minLength: 3
+          maxLength: 50
+          pattern: '^[a-zA-Z0-9_]+$'
+        userType:
+          type: string
+          enum: [NORMAL, VIP]
+
+    UserResponse:
+      type: object
+      required: [id, username, userType]
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+          maxLength: 50
+        userType:
+          type: string
+
+    ProductRequest:
+      type: object
+      required: [name, price]
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 100
+        price:
+          type: number
+          minimum: 0.01
+          maximum: 100000.00
+
+    ProductResponse:
+      type: object
+      required: [id, name, price]
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        price:
+          type: number
+
+    CartCreationRequest:
+      type: object
+      required: [userId]
+      additionalProperties: false
+      properties:
+        userId:
+          type: string
+          format: uuid
+
+    CartItemRequest:
+      type: object
+      required: [productId, quantity]
+      additionalProperties: false
+      properties:
+        productId:
+          type: string
+          format: uuid
+        quantity:
+          type: integer
+          minimum: 1
+          maximum: 1000
+
+    CartItemResponse:
+      type: object
+      required: [product, quantity, subTotal]
+      additionalProperties: false
+      properties:
+        product:
+          $ref: '#/components/schemas/ProductResponse'
+        quantity:
+          type: integer
+        subTotal:
+          type: number
+
+    CartResponse:
+      type: object
+      required: [id, userId, cartType, items, rawSubTotal, finalTotal, discountApplied, status]
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        cartType:
+          type: string
+          enum: [NORMAL, VIP]
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItemResponse'
+        rawSubTotal:
+          type: number
+        finalTotal:
+          type: number
+        discountApplied:
+          type: number
+        status:
+          type: string
+          enum: [ACTIVE, CHECKED_OUT]
+
+    CheckoutResponse:
+      type: object
+      required: [cartId, userId, finalAmountPaid, purchaseTimestamp]
+      additionalProperties: false
+      properties:
+        orderId:
+          type: string
+          format: uuid
+        cartId:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        finalAmountPaid:
+          type: number
+        purchaseTimestamp:
+          type: string
+          format: date-time
+        status:
+          type: string
