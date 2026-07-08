@@ -20,7 +20,7 @@ public class UserPersistenceAdapter implements UserRepositoryPort {
 
     @Override
     public User save(User user) {
-        UserEntity entity = new UserEntity(user.id(), user.username(), user.userType());
+        UserEntity entity = new UserEntity(user.id(), user.username(), user.email(), user.isVip());
         UserEntity saved = repository.save(entity);
         return mapToDomain(saved);
     }
@@ -41,6 +41,6 @@ public class UserPersistenceAdapter implements UserRepositoryPort {
     }
 
     private User mapToDomain(UserEntity entity) {
-        return new User(entity.getId(), entity.getUsername(), entity.getUserType());
+        return new User(entity.getId(), entity.getUsername(), entity.getEmail(), entity.isVip());
     }
 }

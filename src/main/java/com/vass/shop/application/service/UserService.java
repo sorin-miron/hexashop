@@ -33,8 +33,8 @@ public class UserService implements UserUseCase {
         if (!userRepositoryPort.existsById(id)) {
             throw new EntityNotFoundException("User not found with ID: " + id);
         }
-        User updateUser = new User(id, user.username(), user.userType());
-        return userRepositoryPort.save(updateUser);
+        User updatedUser = new User(id, user.username(), user.email(), user.isVip());
+        return userRepositoryPort.save(updatedUser);
     }
 
     @Override

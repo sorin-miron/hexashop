@@ -1,6 +1,5 @@
 package com.vass.shop.infrastructure.adapters.outbound.persistence.entity;
 
-import com.vass.shop.domain.model.UserType;
 import jakarta.persistence.*;
 import java.util.UUID;
 
@@ -13,16 +12,19 @@ public class UserEntity {
     @Column(nullable = false)
     private String username;
 
-    @Column(nullable = false)
-    private UserType userType;
+    @Column(nullable = false, unique = true)
+    private String email;
 
-    // Getters, Setters, Constructors
+    @Column(nullable = false)
+    private boolean isVip;
+
     public UserEntity() {}
 
-    public UserEntity(UUID id, String username, UserType userType) {
+    public UserEntity(UUID id, String username, String email, boolean isVip) {
         this.id = id;
         this.username = username;
-        this.userType = userType;
+        this.email = email;
+        this.isVip = isVip;
     }
 
     public UUID getId() {
@@ -41,12 +43,20 @@ public class UserEntity {
         this.username = username;
     }
 
-    public UserType getUserType() {
-        return userType;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isVip() {
+        return isVip;
+    }
+
+    public void setIsVip(boolean isVip) {
+        this.isVip = isVip;
     }
 
 }

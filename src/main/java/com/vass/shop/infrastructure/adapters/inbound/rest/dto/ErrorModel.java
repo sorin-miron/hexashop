@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  * ErrorModel
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-08T15:51:02.639518700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-08T22:59:31.432094100+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
 public class ErrorModel {
 
   private Integer code;

@@ -1,8 +1,9 @@
 openapi: 3.0.3
 info:
   title: Shopping Cart API
-  description: Secure API-First Shopping Cart Service adhering to Hexagonal Architecture constraints.
   version: 1.0.0
+  description: Secure API-First Shopping Cart Service adhering to Hexagonal Architecture constraints.
+
 servers:
   - url: http://localhost:8080/api/v1
     description: Local Server
@@ -525,7 +526,7 @@ components:
 
     UserRequest:
       type: object
-      required: [username, userType]
+      required: [username, email, isVip]
       additionalProperties: false
       properties:
         username:
@@ -533,13 +534,16 @@ components:
           minLength: 3
           maxLength: 50
           pattern: '^[a-zA-Z0-9_]+$'
-        userType:
+        email:
           type: string
-          enum: [NORMAL, VIP]
+          format: email
+          maxLength: 100
+        isVip:
+          type: boolean
 
     UserResponse:
       type: object
-      required: [id, username, userType]
+      required: [id, username, email, isVip]
       additionalProperties: false
       properties:
         id:
@@ -547,9 +551,10 @@ components:
           format: uuid
         username:
           type: string
-          maxLength: 50
-        userType:
+        email:
           type: string
+        isVip:
+          type: boolean
 
     ProductRequest:
       type: object
@@ -642,22 +647,11 @@ components:
 
     CheckoutResponse:
       type: object
-      required: [cartId, userId, finalAmountPaid, purchaseTimestamp]
+      required: [orderId, status]
       additionalProperties: false
       properties:
         orderId:
           type: string
           format: uuid
-        cartId:
-          type: string
-          format: uuid
-        userId:
-          type: string
-          format: uuid
-        finalAmountPaid:
-          type: number
-        purchaseTimestamp:
-          type: string
-          format: date-time
         status:
           type: string

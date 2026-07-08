@@ -64,9 +64,9 @@ public class CartController implements CartsApi {
         response.setId(cart.getId());
         response.setUserId(cart.getUserId());
         response.setCartType(CartResponse.CartTypeEnum.valueOf(cart.getType().name()));
-        response.setRawSubTotal(executionSummary.subtotal);
-        response.setDiscountApplied(executionSummary.totalDiscount);
-        response.setFinalTotal(executionSummary.finalTotal);
+        response.setRawSubTotal(executionSummary.getSubtotal());
+        response.setDiscountApplied(executionSummary.getTotalDiscount());
+        response.setFinalTotal(executionSummary.getFinalTotal());
 
         response.setItems(cart.getItems().stream().map(item -> {
             CartItemResponse itemRes = new CartItemResponse();

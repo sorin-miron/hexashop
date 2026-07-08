@@ -2,7 +2,6 @@ package com.vass.shop.infrastructure.adapters.inbound.rest;
 
 import com.vass.shop.application.ports.inbound.UserUseCase;
 import com.vass.shop.domain.model.User;
-import com.vass.shop.domain.model.UserType;
 import com.vass.shop.infrastructure.adapters.inbound.rest.api.UsersApi;
 import com.vass.shop.infrastructure.adapters.inbound.rest.dto.ProductResponse;
 import com.vass.shop.infrastructure.adapters.inbound.rest.dto.UserRequest;
@@ -28,7 +27,8 @@ public class UserController implements UsersApi {
         User user = new User(
                 UUID.randomUUID(),
                 userRequest.getUsername(),
-                UserType.fromValue(userRequest.getUserType().getValue())
+                userRequest.getEmail(),
+                Boolean.TRUE.equals(userRequest.getIsVip())
         );
         User savedUser = userUseCase.createUser(user);
         return new ResponseEntity<>(mapToResponse(savedUser), HttpStatus.CREATED);
@@ -51,10 +51,11 @@ public class UserController implements UsersApi {
         User user = new User(
                 userId,
                 userRequest.getUsername(),
-                UserType.fromValue(userRequest.getUserType().getValue())
+                userRequest.getEmail(),
+                Boolean.TRUE.equals(userRequest.getIsVip())
         );
         User updatedUser = userUseCase.updateUser(userId, user);
-        return new ResponseEntity<>(mapToResponse(updatedUser), HttpStatus.OK);
+        return ResponseEntity.ok(mapToResponse(updatedUser));
     }
 
     @Override
@@ -73,7 +74,8 @@ public class UserController implements UsersApi {
         UserResponse response = new UserResponse();
         response.setId(user.id());
         response.setUsername(user.username());
-        response.setUserType(user.userType().getValue());
+        response.setEmail(user.email());
+        response.setIsVip(user.isVip());
         return response;
     }
 }

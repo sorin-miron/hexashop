@@ -19,14 +19,16 @@ import jakarta.annotation.Generated;
  * UserResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-08T15:51:02.639518700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-08T22:59:31.432094100+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
 public class UserResponse {
 
   private UUID id;
 
   private String username;
 
-  private String userType;
+  private String email;
+
+  private Boolean isVip;
 
   public UserResponse() {
     super();
@@ -35,10 +37,11 @@ public class UserResponse {
   /**
    * Constructor with only required parameters
    */
-  public UserResponse(UUID id, String username, String userType) {
+  public UserResponse(UUID id, String username, String email, Boolean isVip) {
     this.id = id;
     this.username = username;
-    this.userType = userType;
+    this.email = email;
+    this.isVip = isVip;
   }
 
   public UserResponse id(UUID id) {
@@ -71,7 +74,7 @@ public class UserResponse {
    * Get username
    * @return username
    */
-  @NotNull @Size(max = 50) 
+  @NotNull 
   @Schema(name = "username", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("username")
   public String getUsername() {
@@ -83,25 +86,46 @@ public class UserResponse {
     this.username = username;
   }
 
-  public UserResponse userType(String userType) {
-    this.userType = userType;
+  public UserResponse email(String email) {
+    this.email = email;
     return this;
   }
 
   /**
-   * Get userType
-   * @return userType
+   * Get email
+   * @return email
    */
   @NotNull 
-  @Schema(name = "userType", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("userType")
-  public String getUserType() {
-    return userType;
+  @Schema(name = "email", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("email")
+  public String getEmail() {
+    return email;
   }
 
-  @JsonProperty("userType")
-  public void setUserType(String userType) {
-    this.userType = userType;
+  @JsonProperty("email")
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public UserResponse isVip(Boolean isVip) {
+    this.isVip = isVip;
+    return this;
+  }
+
+  /**
+   * Get isVip
+   * @return isVip
+   */
+  @NotNull 
+  @Schema(name = "isVip", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("isVip")
+  public Boolean getIsVip() {
+    return isVip;
+  }
+
+  @JsonProperty("isVip")
+  public void setIsVip(Boolean isVip) {
+    this.isVip = isVip;
   }
 
   @Override
@@ -115,12 +139,13 @@ public class UserResponse {
     UserResponse userResponse = (UserResponse) o;
     return Objects.equals(this.id, userResponse.id) &&
         Objects.equals(this.username, userResponse.username) &&
-        Objects.equals(this.userType, userResponse.userType);
+        Objects.equals(this.email, userResponse.email) &&
+        Objects.equals(this.isVip, userResponse.isVip);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, username, userType);
+    return Objects.hash(id, username, email, isVip);
   }
 
   @Override
@@ -129,7 +154,8 @@ public class UserResponse {
     sb.append("class UserResponse {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    username: ").append(toIndentedString(username)).append("\n");
-    sb.append("    userType: ").append(toIndentedString(userType)).append("\n");
+    sb.append("    email: ").append(toIndentedString(email)).append("\n");
+    sb.append("    isVip: ").append(toIndentedString(isVip)).append("\n");
     sb.append("}");
     return sb.toString();
   }

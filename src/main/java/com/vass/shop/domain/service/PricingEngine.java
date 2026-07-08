@@ -12,14 +12,26 @@ import java.util.Comparator;
 public class PricingEngine {
 
     public static class PriceSummary {
-        public BigDecimal subtotal;
-        public BigDecimal totalDiscount;
-        public BigDecimal finalTotal;
+        private final BigDecimal subtotal;
+        private final BigDecimal totalDiscount;
+        private final BigDecimal finalTotal;
 
         public PriceSummary(BigDecimal subtotal, BigDecimal totalDiscount, BigDecimal finalTotal) {
             this.subtotal = subtotal.setScale(2, RoundingMode.HALF_UP);
             this.totalDiscount = totalDiscount.setScale(2, RoundingMode.HALF_UP);
             this.finalTotal = finalTotal.setScale(2, RoundingMode.HALF_UP);
+        }
+
+        public BigDecimal getSubtotal() {
+            return subtotal;
+        }
+
+        public BigDecimal getTotalDiscount() {
+            return totalDiscount;
+        }
+
+        public BigDecimal getFinalTotal() {
+            return finalTotal;
         }
     }
 

@@ -7,6 +7,7 @@ import com.vass.shop.application.ports.outbound.ProductRepositoryPort;
 import com.vass.shop.application.ports.outbound.UserRepositoryPort;
 import com.vass.shop.domain.model.*;
 import com.vass.shop.domain.service.PricingEngine;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -29,15 +30,17 @@ public class CartService implements CartUseCase {
 
     @Override
     public Cart createCart(UUID userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        CartType type = UserType.VIP.equals(user.userType()) ? CartType.VIP : CartType.NORMAL;
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        CartType type = user.isVip() ? CartType.VIP : CartType.NORMAL;
         Cart cart = new Cart(UUID.randomUUID(), userId, type);
         return cartRepository.save(cart);
     }
 
     @Override
     public Cart getCart(UUID cartId) {
-        return cartRepository.findById(cartId).orElseThrow(() -> new RuntimeException("Cart not found"));
+        return cartRepository.findById(cartId)
+                .orElseThrow(() -> new RuntimeException("Cart not found"));
     }
 
     @Override
@@ -48,7 +51,8 @@ public class CartService implements CartUseCase {
     @Override
     public Cart addItem(UUID cartId, UUID productId, int quantity) {
         Cart cart = getCart(cartId);
-        Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
         cart.addItem(product, quantity);
         return cartRepository.save(cart);
     }
@@ -56,13 +60,17 @@ public class CartService implements CartUseCase {
     @Override
     public Cart removeItem(UUID cartId, UUID productId) {
         Cart cart = getCart(cartId);
-        Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
         cart.removeItem(product);
         return cartRepository.save(cart);
     }
 
     @Override
     public void deleteCart(UUID cartId) {
+        if (!cartRepository.existsById(cartId)) {
+            throw new EntityNotFoundException("Cart not found with ID: " + cartId);
+        }
         cartRepository.deleteById(cartId);
     }
 
@@ -72,8 +80,8 @@ public class CartService implements CartUseCase {
         PricingEngine.PriceSummary summary = pricingEngine.calculatePrice(cart);
 
         UUID orderId = UUID.randomUUID();
-        orderRepository.saveHistoricalOrder(orderId, cart.getUserId(), cart, summary.finalTotal);
-
+        orderRepository.saveHistoricalOrder(orderId, cart, summary.getFinalTotal());
+        // TODO: de verificat daca fac cu flag pe carts sau nu
         cartRepository.deleteById(cartId);
         return orderId;
     }

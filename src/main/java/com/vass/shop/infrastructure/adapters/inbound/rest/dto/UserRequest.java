@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import org.springframework.lang.Nullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -19,47 +18,14 @@ import jakarta.annotation.Generated;
  * UserRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-08T15:51:02.639518700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-08T22:59:31.432094100+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
 public class UserRequest {
 
   private String username;
 
-  /**
-   * Gets or Sets userType
-   */
-  public enum UserTypeEnum {
-    NORMAL("NORMAL"),
-    
-    VIP("VIP");
+  private String email;
 
-    private final String value;
-
-    UserTypeEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static UserTypeEnum fromValue(String value) {
-      for (UserTypeEnum b : UserTypeEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
-
-  private UserTypeEnum userType;
+  private Boolean isVip;
 
   public UserRequest() {
     super();
@@ -68,9 +34,10 @@ public class UserRequest {
   /**
    * Constructor with only required parameters
    */
-  public UserRequest(String username, UserTypeEnum userType) {
+  public UserRequest(String username, String email, Boolean isVip) {
     this.username = username;
-    this.userType = userType;
+    this.email = email;
+    this.isVip = isVip;
   }
 
   public UserRequest username(String username) {
@@ -94,25 +61,46 @@ public class UserRequest {
     this.username = username;
   }
 
-  public UserRequest userType(UserTypeEnum userType) {
-    this.userType = userType;
+  public UserRequest email(String email) {
+    this.email = email;
     return this;
   }
 
   /**
-   * Get userType
-   * @return userType
+   * Get email
+   * @return email
    */
-  @NotNull 
-  @Schema(name = "userType", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("userType")
-  public UserTypeEnum getUserType() {
-    return userType;
+  @NotNull @Size(max = 100) @Email
+  @Schema(name = "email", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("email")
+  public String getEmail() {
+    return email;
   }
 
-  @JsonProperty("userType")
-  public void setUserType(UserTypeEnum userType) {
-    this.userType = userType;
+  @JsonProperty("email")
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public UserRequest isVip(Boolean isVip) {
+    this.isVip = isVip;
+    return this;
+  }
+
+  /**
+   * Get isVip
+   * @return isVip
+   */
+  @NotNull 
+  @Schema(name = "isVip", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("isVip")
+  public Boolean getIsVip() {
+    return isVip;
+  }
+
+  @JsonProperty("isVip")
+  public void setIsVip(Boolean isVip) {
+    this.isVip = isVip;
   }
 
   @Override
@@ -125,12 +113,13 @@ public class UserRequest {
     }
     UserRequest userRequest = (UserRequest) o;
     return Objects.equals(this.username, userRequest.username) &&
-        Objects.equals(this.userType, userRequest.userType);
+        Objects.equals(this.email, userRequest.email) &&
+        Objects.equals(this.isVip, userRequest.isVip);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(username, userType);
+    return Objects.hash(username, email, isVip);
   }
 
   @Override
@@ -138,7 +127,8 @@ public class UserRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class UserRequest {\n");
     sb.append("    username: ").append(toIndentedString(username)).append("\n");
-    sb.append("    userType: ").append(toIndentedString(userType)).append("\n");
+    sb.append("    email: ").append(toIndentedString(email)).append("\n");
+    sb.append("    isVip: ").append(toIndentedString(isVip)).append("\n");
     sb.append("}");
     return sb.toString();
   }
