@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 public class CartController implements CartsApi {
@@ -78,7 +77,7 @@ public class CartController implements CartsApi {
             itemRes.setQuantity(item.getQuantity());
             itemRes.setSubTotal(item.getSubTotal());
             return itemRes;
-        }).collect(Collectors.toList()));
+        }).toList());
 
         return response;
     }

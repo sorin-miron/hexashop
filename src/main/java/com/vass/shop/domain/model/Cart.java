@@ -6,14 +6,23 @@ public class Cart {
     private final UUID id;
     private final UUID userId;
     private final CartType type;
-    private final List<CartItem> items = new ArrayList<>();
+    private final List<CartItem> items;
     private boolean checkedOut;
 
     public Cart(UUID id, UUID userId, CartType type) {
         this.id = id;
         this.userId = userId;
         this.type = type;
+        this.items = new ArrayList<>();
         this.checkedOut = false;
+    }
+
+    public Cart(UUID id, UUID userId, CartType type, List<CartItem> items, boolean checkedOut) {
+        this.id = id;
+        this.userId = userId;
+        this.type = type;
+        this.items = new ArrayList<>(items);
+        this.checkedOut = checkedOut;
     }
 
     public UUID getId() { return id; }

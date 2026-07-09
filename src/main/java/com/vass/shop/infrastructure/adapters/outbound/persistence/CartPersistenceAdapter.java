@@ -2,6 +2,8 @@ package com.vass.shop.infrastructure.adapters.outbound.persistence;
 
 import com.vass.shop.application.ports.outbound.CartRepositoryPort;
 import com.vass.shop.domain.model.Cart;
+import com.vass.shop.domain.model.CartItem;
+import com.vass.shop.domain.model.Product;
 import com.vass.shop.infrastructure.adapters.outbound.persistence.entity.CartEntity;
 import com.vass.shop.infrastructure.adapters.outbound.persistence.entity.CartItemEntity;
 import com.vass.shop.infrastructure.adapters.outbound.persistence.repository.CartJPARepository;
@@ -9,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Component
 public class CartPersistenceAdapter implements CartRepositoryPort {
@@ -26,11 +27,14 @@ public class CartPersistenceAdapter implements CartRepositoryPort {
         entity.setId(cart.getId());
         entity.setUserId(cart.getUserId());
         entity.setType(cart.getType());
-
+        entity.setCheckedOut(cart.isCheckedOut());
         entity.setItems(cart.getItems().stream()
-                .map(cartItem -> new CartItemEntity(cartItem.getProduct().id(), cartItem.getQuantity()))
-                .collect(Collectors.toList()));
-
+                .map(cartItem -> new CartItemEntity(
+                        cartItem.getProduct().id(),
+                        cartItem.getProduct().name(),
+                        cartItem.getProduct().price(),
+                        cartItem.getQuantity()))
+                .toList());
         CartEntity saved = repository.save(entity);
         return mapToDomain(saved);
     }
@@ -54,11 +58,13 @@ public class CartPersistenceAdapter implements CartRepositoryPort {
         return new Cart(
                 entity.getId(),
                 entity.getUserId(),
-                entity.getType()
-//                entity.getItems().stream()
-//                        // TODO: de facut inserare in map
-//                        .map(cartItem -> new CartItemEntity(cartItem.getProduct().id(), cartItem.getQuantity()))
-//                        .collect(Collectors.toList())
-        );
+                entity.getType(),
+                entity.getItems().stream()
+                        .map(cartItemEntity -> new CartItem(
+                                new Product(cartItemEntity.getProductId(), cartItemEntity.getProductName(),
+                                        cartItemEntity.getUnitPrice()),
+                                cartItemEntity.getQuantity()))
+                        .toList(),
+                entity.isCheckedOut());
     }
 }

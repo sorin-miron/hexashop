@@ -47,9 +47,7 @@ public class CartService implements CartUseCase {
 
     @Override
     public Cart addItem(UUID cartId, UUID productId, int quantity) {
-        if (!cartRepository.existsById(cartId)) {
-            throw new RuntimeException("Cart not found with ID: " + cartId);
-        }
+        ensureCartExists(cartId);
         Cart cart = getCart(cartId);
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
@@ -59,9 +57,7 @@ public class CartService implements CartUseCase {
 
     @Override
     public Cart removeItem(UUID cartId, UUID productId) {
-        if (!cartRepository.existsById(cartId)) {
-            throw new RuntimeException("Cart not found with ID: " + cartId);
-        }
+        ensureCartExists(cartId);
         Cart cart = getCart(cartId);
         cart.removeItem(productId);
         return cartRepository.save(cart);
@@ -69,17 +65,13 @@ public class CartService implements CartUseCase {
 
     @Override
     public void deleteCart(UUID cartId) {
-        if (!cartRepository.existsById(cartId)) {
-            throw new RuntimeException("Cart not found with ID: " + cartId);
-        }
+        ensureCartExists(cartId);
         cartRepository.deleteById(cartId);
     }
 
     @Override
     public UUID checkout(UUID cartId) {
-        if (!cartRepository.existsById(cartId)) {
-            throw new RuntimeException("Cart not found with ID: " + cartId);
-        }
+        ensureCartExists(cartId);
         Cart cart = getCart(cartId);
         cart.checkOut();
         cartRepository.save(cart);
@@ -88,5 +80,11 @@ public class CartService implements CartUseCase {
         PricingEngine.PriceSummary summary = pricingEngine.calculatePrice(cart);
         orderRepository.savePurchasedItems(orderId, cart, summary.getFinalTotal());
         return orderId;
+    }
+
+    private void ensureCartExists(UUID cartId) {
+        if (!cartRepository.existsById(cartId)) {
+            throw new RuntimeException("Cart not found with ID: " + cartId);
+        }
     }
 }

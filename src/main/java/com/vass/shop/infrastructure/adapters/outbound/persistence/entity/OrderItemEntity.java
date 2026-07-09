@@ -29,7 +29,15 @@ public class OrderItemEntity {
     @Column(nullable = false)
     private int productQuantity;
 
-    public OrderItemEntity(UUID randomUUID, UUID orderId, UUID userId, UUID id, String name, BigDecimal price, int quantity) {
+    public OrderItemEntity() {}
+
+    public OrderItemEntity(UUID orderId, UUID userId, UUID productId, String productName, BigDecimal productPrice, int productQuantity) {
+        this.orderId = orderId;
+        this.userId = userId;
+        this.productId = productId;
+        this.productName = productName;
+        this.productPrice = productPrice;
+        this.productQuantity = productQuantity;
     }
 
     public Long getId() {
