@@ -13,6 +13,7 @@ paths:
     post:
       summary: Create a user
       operationId: createUser
+      security: []
       requestBody:
         required: true
         content:
