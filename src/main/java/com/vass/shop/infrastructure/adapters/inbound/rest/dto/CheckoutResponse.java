@@ -19,12 +19,12 @@ import jakarta.annotation.Generated;
  * CheckoutResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-08T22:59:31.432094100+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-09T17:26:00.241978700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
 public class CheckoutResponse {
 
   private UUID orderId;
 
-  private String status;
+  private Boolean checkedOut;
 
   public CheckoutResponse() {
     super();
@@ -33,9 +33,9 @@ public class CheckoutResponse {
   /**
    * Constructor with only required parameters
    */
-  public CheckoutResponse(UUID orderId, String status) {
+  public CheckoutResponse(UUID orderId, Boolean checkedOut) {
     this.orderId = orderId;
-    this.status = status;
+    this.checkedOut = checkedOut;
   }
 
   public CheckoutResponse orderId(UUID orderId) {
@@ -59,25 +59,25 @@ public class CheckoutResponse {
     this.orderId = orderId;
   }
 
-  public CheckoutResponse status(String status) {
-    this.status = status;
+  public CheckoutResponse checkedOut(Boolean checkedOut) {
+    this.checkedOut = checkedOut;
     return this;
   }
 
   /**
-   * Get status
-   * @return status
+   * Get checkedOut
+   * @return checkedOut
    */
   @NotNull 
-  @Schema(name = "status", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("status")
-  public String getStatus() {
-    return status;
+  @Schema(name = "checkedOut", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("checkedOut")
+  public Boolean getCheckedOut() {
+    return checkedOut;
   }
 
-  @JsonProperty("status")
-  public void setStatus(String status) {
-    this.status = status;
+  @JsonProperty("checkedOut")
+  public void setCheckedOut(Boolean checkedOut) {
+    this.checkedOut = checkedOut;
   }
 
   @Override
@@ -90,12 +90,12 @@ public class CheckoutResponse {
     }
     CheckoutResponse checkoutResponse = (CheckoutResponse) o;
     return Objects.equals(this.orderId, checkoutResponse.orderId) &&
-        Objects.equals(this.status, checkoutResponse.status);
+        Objects.equals(this.checkedOut, checkoutResponse.checkedOut);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(orderId, status);
+    return Objects.hash(orderId, checkedOut);
   }
 
   @Override
@@ -103,7 +103,7 @@ public class CheckoutResponse {
     StringBuilder sb = new StringBuilder();
     sb.append("class CheckoutResponse {\n");
     sb.append("    orderId: ").append(toIndentedString(orderId)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    checkedOut: ").append(toIndentedString(checkedOut)).append("\n");
     sb.append("}");
     return sb.toString();
   }

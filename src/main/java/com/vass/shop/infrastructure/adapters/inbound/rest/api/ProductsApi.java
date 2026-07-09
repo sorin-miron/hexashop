@@ -5,8 +5,7 @@
  */
 package com.vass.shop.infrastructure.adapters.inbound.rest.api;
 
-import com.vass.shop.infrastructure.adapters.inbound.rest.dto.ErrorModel;
-import org.springframework.lang.Nullable;
+import com.vass.shop.infrastructure.adapters.inbound.rest.dto.ErrorDetail;
 import com.vass.shop.infrastructure.adapters.inbound.rest.dto.ProductRequest;
 import com.vass.shop.infrastructure.adapters.inbound.rest.dto.ProductResponse;
 import java.util.UUID;
@@ -34,7 +33,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-08T22:59:31.432094100+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-09T17:26:00.241978700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
 @Validated
 @Tag(name = "products", description = "the products API")
 public interface ProductsApi {
@@ -57,13 +56,13 @@ public interface ProductsApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponse.class))
             }),
             @ApiResponse(responseCode = "400", description = "Invalid request payloads or schema errors.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "401", description = "Authorization header missing or validation failed.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "500", description = "Internal Server Error.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             })
         },
         security = {
@@ -97,13 +96,13 @@ public interface ProductsApi {
         responses = {
             @ApiResponse(responseCode = "204", description = "Product deleted successfully"),
             @ApiResponse(responseCode = "401", description = "Authorization header missing or validation failed.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "404", description = "Requested domain entity could not be found.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "500", description = "Internal Server Error.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             })
         },
         security = {
@@ -138,13 +137,13 @@ public interface ProductsApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponse.class))
             }),
             @ApiResponse(responseCode = "401", description = "Authorization header missing or validation failed.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "404", description = "Requested domain entity could not be found.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "500", description = "Internal Server Error.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             })
         },
         security = {
@@ -158,47 +157,6 @@ public interface ProductsApi {
     )
     ResponseEntity<ProductResponse> getProductById(
         @Parameter(name = "productId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("productId") UUID productId
-    );
-
-
-    String PATH_LIST_PRODUCTS = "/products";
-    /**
-     * GET /products : List all products
-     *
-     * @param limit How many products to return at one time (optional, default to 10)
-     * @return A list of products (status code 200)
-     *         or Invalid request payloads or schema errors. (status code 400)
-     *         or Authorization header missing or validation failed. (status code 401)
-     *         or Internal Server Error. (status code 500)
-     */
-    @Operation(
-        operationId = "listProducts",
-        summary = "List all products",
-        responses = {
-            @ApiResponse(responseCode = "200", description = "A list of products", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ProductResponse.class)))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid request payloads or schema errors.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Authorization header missing or validation failed.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
-            }),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = ProductsApi.PATH_LIST_PRODUCTS,
-        produces = { "application/json" }
-    )
-    ResponseEntity<List<ProductResponse>> listProducts(
-        @Parameter(name = "limit", description = "How many products to return at one time", in = ParameterIn.QUERY) @Valid @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit
     );
 
 
@@ -222,16 +180,16 @@ public interface ProductsApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponse.class))
             }),
             @ApiResponse(responseCode = "400", description = "Invalid request payloads or schema errors.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "401", description = "Authorization header missing or validation failed.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "404", description = "Requested domain entity could not be found.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "500", description = "Internal Server Error.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             })
         },
         security = {

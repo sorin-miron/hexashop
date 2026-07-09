@@ -39,12 +39,6 @@ public class ProductController implements ProductsApi {
     }
 
     @Override
-    public ResponseEntity<List<ProductResponse>> listProducts(Integer limit) {
-        // TODO: de facut
-        return null;
-    }
-
-    @Override
     public ResponseEntity<ProductResponse> updateProduct(UUID productId, ProductRequest productRequest) {
         Product productDetails = new Product(productId, productRequest.getName(), productRequest.getPrice());
         Product updatedProduct = productUseCase.updateProduct(productId, productDetails);

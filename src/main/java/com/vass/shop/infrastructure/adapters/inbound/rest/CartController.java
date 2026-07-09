@@ -54,7 +54,7 @@ public class CartController implements CartsApi {
         UUID orderId = cartUseCase.checkout(cartId);
         CheckoutResponse res = new CheckoutResponse();
         res.setOrderId(orderId);
-        res.setStatus("SUCCESSFULLY_PERSISTED");
+        res.checkedOut(true);
         return ResponseEntity.ok(res);
     }
 

@@ -17,11 +17,11 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * ErrorModel
+ * ErrorDetail
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-08T22:59:31.432094100+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
-public class ErrorModel {
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-09T17:26:00.241978700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
+public class ErrorDetail {
 
   private Integer code;
 
@@ -30,20 +30,20 @@ public class ErrorModel {
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private OffsetDateTime timestamp;
 
-  public ErrorModel() {
+  public ErrorDetail() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public ErrorModel(Integer code, String message, OffsetDateTime timestamp) {
+  public ErrorDetail(Integer code, String message, OffsetDateTime timestamp) {
     this.code = code;
     this.message = message;
     this.timestamp = timestamp;
   }
 
-  public ErrorModel code(Integer code) {
+  public ErrorDetail code(Integer code) {
     this.code = code;
     return this;
   }
@@ -66,7 +66,7 @@ public class ErrorModel {
     this.code = code;
   }
 
-  public ErrorModel message(String message) {
+  public ErrorDetail message(String message) {
     this.message = message;
     return this;
   }
@@ -87,7 +87,7 @@ public class ErrorModel {
     this.message = message;
   }
 
-  public ErrorModel timestamp(OffsetDateTime timestamp) {
+  public ErrorDetail timestamp(OffsetDateTime timestamp) {
     this.timestamp = timestamp;
     return this;
   }
@@ -116,10 +116,10 @@ public class ErrorModel {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ErrorModel errorModel = (ErrorModel) o;
-    return Objects.equals(this.code, errorModel.code) &&
-        Objects.equals(this.message, errorModel.message) &&
-        Objects.equals(this.timestamp, errorModel.timestamp);
+    ErrorDetail errorDetail = (ErrorDetail) o;
+    return Objects.equals(this.code, errorDetail.code) &&
+        Objects.equals(this.message, errorDetail.message) &&
+        Objects.equals(this.timestamp, errorDetail.timestamp);
   }
 
   @Override
@@ -130,7 +130,7 @@ public class ErrorModel {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ErrorModel {\n");
+    sb.append("class ErrorDetail {\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");

@@ -7,12 +7,9 @@ import com.vass.shop.application.ports.outbound.ProductRepositoryPort;
 import com.vass.shop.application.ports.outbound.UserRepositoryPort;
 import com.vass.shop.domain.model.*;
 import com.vass.shop.domain.service.PricingEngine;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-@Service
 public class CartService implements CartUseCase {
     private final CartRepositoryPort cartRepository;
     private final UserRepositoryPort userRepository;
@@ -50,6 +47,9 @@ public class CartService implements CartUseCase {
 
     @Override
     public Cart addItem(UUID cartId, UUID productId, int quantity) {
+        if (!cartRepository.existsById(cartId)) {
+            throw new RuntimeException("Cart not found with ID: " + cartId);
+        }
         Cart cart = getCart(cartId);
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
@@ -59,30 +59,34 @@ public class CartService implements CartUseCase {
 
     @Override
     public Cart removeItem(UUID cartId, UUID productId) {
+        if (!cartRepository.existsById(cartId)) {
+            throw new RuntimeException("Cart not found with ID: " + cartId);
+        }
         Cart cart = getCart(cartId);
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-        cart.removeItem(product);
+        cart.removeItem(productId);
         return cartRepository.save(cart);
     }
 
     @Override
     public void deleteCart(UUID cartId) {
         if (!cartRepository.existsById(cartId)) {
-            throw new EntityNotFoundException("Cart not found with ID: " + cartId);
+            throw new RuntimeException("Cart not found with ID: " + cartId);
         }
         cartRepository.deleteById(cartId);
     }
 
     @Override
     public UUID checkout(UUID cartId) {
+        if (!cartRepository.existsById(cartId)) {
+            throw new RuntimeException("Cart not found with ID: " + cartId);
+        }
         Cart cart = getCart(cartId);
-        PricingEngine.PriceSummary summary = pricingEngine.calculatePrice(cart);
+        cart.checkOut();
+        cartRepository.save(cart);
 
         UUID orderId = UUID.randomUUID();
-        orderRepository.saveHistoricalOrder(orderId, cart, summary.getFinalTotal());
-        // TODO: de verificat daca fac cu flag pe carts sau nu
-        cartRepository.deleteById(cartId);
+        PricingEngine.PriceSummary summary = pricingEngine.calculatePrice(cart);
+        orderRepository.savePurchasedItems(orderId, cart, summary.getFinalTotal());
         return orderId;
     }
 }

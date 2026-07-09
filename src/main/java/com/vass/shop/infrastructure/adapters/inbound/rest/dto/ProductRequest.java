@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  * ProductRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-08T22:59:31.432094100+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-09T17:26:00.241978700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
 public class ProductRequest {
 
   private String name;
@@ -47,7 +47,7 @@ public class ProductRequest {
    * Get name
    * @return name
    */
-  @NotNull @Size(min = 2, max = 100) 
+  @NotNull @Pattern(regexp = "^[a-zA-Z0-9\\s,-]+$") @Size(min = 2, max = 100) 
   @Schema(name = "name", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {

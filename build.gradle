@@ -3,6 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '3.5.16'
 	id 'io.spring.dependency-management' version '1.1.7'
     id 'org.openapi.generator' version '7.23.0'
+    id 'org.sonarqube' version '4.4.1.3373'
 }
 
 group = 'com.vass.shop'
@@ -23,9 +24,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok'
 
     // OpenAPI generation prerequisites
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.4.0'
@@ -33,9 +32,7 @@ dependencies {
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-	testCompileOnly 'org.projectlombok:lombok'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
 openApiGenerate {
@@ -66,4 +63,12 @@ openApiGenerate {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", "shopping-cart-service"
+        property "sonar.projectName", "Secure Shopping Cart Service"
+        property "sonar.qualitygate.wait", "true"
+    }
 }

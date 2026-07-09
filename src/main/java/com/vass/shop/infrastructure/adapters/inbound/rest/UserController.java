@@ -1,6 +1,7 @@
 package com.vass.shop.infrastructure.adapters.inbound.rest;
 
 import com.vass.shop.application.ports.inbound.UserUseCase;
+import com.vass.shop.domain.model.Product;
 import com.vass.shop.domain.model.User;
 import com.vass.shop.infrastructure.adapters.inbound.rest.api.UsersApi;
 import com.vass.shop.infrastructure.adapters.inbound.rest.dto.ProductResponse;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,12 +43,6 @@ public class UserController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<List<UserResponse>> listUsers(Integer limit) {
-        // TODO: de facut
-        return null;
-    }
-
-    @Override
     public ResponseEntity<UserResponse> updateUser(UUID userId, UserRequest userRequest) {
         User user = new User(
                 userId,
@@ -66,8 +62,8 @@ public class UserController implements UsersApi {
 
     @Override
     public ResponseEntity<List<ProductResponse>> getTopExpensivePurchases(UUID userId) {
-        // TODO: de facut
-        return null;
+       List<Product> products = userUseCase.getTopExpensivePurchases(userId);
+       return ResponseEntity.ok(mapToProductResponse(products));
     }
 
     private UserResponse mapToResponse(User user) {
@@ -77,5 +73,17 @@ public class UserController implements UsersApi {
         response.setEmail(user.email());
         response.setIsVip(user.isVip());
         return response;
+    }
+
+    private List<ProductResponse> mapToProductResponse(List<Product> products) {
+        List<ProductResponse> productResponses = new ArrayList<>();
+        for(Product product : products) {
+            ProductResponse response = new ProductResponse();
+            response.setId(product.id());
+            response.setName(product.name());
+            response.setPrice(product.price());
+            productResponses.add(response);
+        }
+        return productResponses;
     }
 }

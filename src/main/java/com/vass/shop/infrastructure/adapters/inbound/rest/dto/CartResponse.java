@@ -25,7 +25,7 @@ import jakarta.annotation.Generated;
  * CartResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-08T22:59:31.432094100+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-09T17:26:00.241978700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
 public class CartResponse {
 
   private UUID id;
@@ -77,42 +77,7 @@ public class CartResponse {
 
   private BigDecimal discountApplied;
 
-  /**
-   * Gets or Sets status
-   */
-  public enum StatusEnum {
-    ACTIVE("ACTIVE"),
-    
-    CHECKED_OUT("CHECKED_OUT");
-
-    private final String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String value) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
-
-  private StatusEnum status;
+  private Boolean checkedOut;
 
   public CartResponse() {
     super();
@@ -121,7 +86,7 @@ public class CartResponse {
   /**
    * Constructor with only required parameters
    */
-  public CartResponse(UUID id, UUID userId, CartTypeEnum cartType, List<@Valid CartItemResponse> items, BigDecimal rawSubTotal, BigDecimal finalTotal, BigDecimal discountApplied, StatusEnum status) {
+  public CartResponse(UUID id, UUID userId, CartTypeEnum cartType, List<@Valid CartItemResponse> items, BigDecimal rawSubTotal, BigDecimal finalTotal, BigDecimal discountApplied, Boolean checkedOut) {
     this.id = id;
     this.userId = userId;
     this.cartType = cartType;
@@ -129,7 +94,7 @@ public class CartResponse {
     this.rawSubTotal = rawSubTotal;
     this.finalTotal = finalTotal;
     this.discountApplied = discountApplied;
-    this.status = status;
+    this.checkedOut = checkedOut;
   }
 
   public CartResponse id(UUID id) {
@@ -287,25 +252,25 @@ public class CartResponse {
     this.discountApplied = discountApplied;
   }
 
-  public CartResponse status(StatusEnum status) {
-    this.status = status;
+  public CartResponse checkedOut(Boolean checkedOut) {
+    this.checkedOut = checkedOut;
     return this;
   }
 
   /**
-   * Get status
-   * @return status
+   * Get checkedOut
+   * @return checkedOut
    */
   @NotNull 
-  @Schema(name = "status", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("status")
-  public StatusEnum getStatus() {
-    return status;
+  @Schema(name = "checkedOut", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("checkedOut")
+  public Boolean getCheckedOut() {
+    return checkedOut;
   }
 
-  @JsonProperty("status")
-  public void setStatus(StatusEnum status) {
-    this.status = status;
+  @JsonProperty("checkedOut")
+  public void setCheckedOut(Boolean checkedOut) {
+    this.checkedOut = checkedOut;
   }
 
   @Override
@@ -324,12 +289,12 @@ public class CartResponse {
         Objects.equals(this.rawSubTotal, cartResponse.rawSubTotal) &&
         Objects.equals(this.finalTotal, cartResponse.finalTotal) &&
         Objects.equals(this.discountApplied, cartResponse.discountApplied) &&
-        Objects.equals(this.status, cartResponse.status);
+        Objects.equals(this.checkedOut, cartResponse.checkedOut);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, userId, cartType, items, rawSubTotal, finalTotal, discountApplied, status);
+    return Objects.hash(id, userId, cartType, items, rawSubTotal, finalTotal, discountApplied, checkedOut);
   }
 
   @Override
@@ -343,7 +308,7 @@ public class CartResponse {
     sb.append("    rawSubTotal: ").append(toIndentedString(rawSubTotal)).append("\n");
     sb.append("    finalTotal: ").append(toIndentedString(finalTotal)).append("\n");
     sb.append("    discountApplied: ").append(toIndentedString(discountApplied)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    checkedOut: ").append(toIndentedString(checkedOut)).append("\n");
     sb.append("}");
     return sb.toString();
   }

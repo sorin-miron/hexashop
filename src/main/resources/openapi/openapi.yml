@@ -5,7 +5,7 @@ info:
   description: Secure API-First Shopping Cart Service adhering to Hexagonal Architecture constraints.
 
 servers:
-  - url: http://localhost:8080/api/v1
+  - url: https://localhost:8080/api/v1
     description: Local Server
 
 paths:
@@ -28,34 +28,6 @@ paths:
                 $ref: '#/components/schemas/UserResponse'
         '400':
           $ref: '#/components/responses/400BadRequest'
-        '500':
-          $ref: '#/components/responses/500InternalServerError'
-    get:
-      summary: List all users
-      operationId: listUsers
-      security:
-        - BearerAuth: [ ]
-      parameters:
-        - name: limit
-          in: query
-          description: How many users to return at one time
-          required: false
-          schema:
-            type: integer
-            default: 10
-      responses:
-        '200':
-          description: A list of users
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/UserResponse'
-        '400':
-          $ref: '#/components/responses/400BadRequest'
-        '401':
-          $ref: '#/components/responses/401Unauthorized'
         '500':
           $ref: '#/components/responses/500InternalServerError'
 
@@ -140,6 +112,36 @@ paths:
         '500':
           $ref: '#/components/responses/500InternalServerError'
 
+  /users/{userId}/history/top-expensive:
+    get:
+      summary: Fetch top 4 most expensive single products purchased historically by user
+      operationId: getTopExpensivePurchases
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Array of top 4 expensive items purchased
+          content:
+            application/json:
+              schema:
+                type: array
+                maxItems: 4
+                items:
+                  $ref: '#/components/schemas/ProductResponse'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+
   /products:
     post:
       summary: Create a product
@@ -159,34 +161,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProductResponse'
-        '400':
-          $ref: '#/components/responses/400BadRequest'
-        '401':
-          $ref: '#/components/responses/401Unauthorized'
-        '500':
-          $ref: '#/components/responses/500InternalServerError'
-    get:
-      summary: List all products
-      operationId: listProducts
-      security:
-        - BearerAuth: [ ]
-      parameters:
-        - name: limit
-          in: query
-          description: How many products to return at one time
-          required: false
-          schema:
-            type: integer
-            default: 10
-      responses:
-        '200':
-          description: A list of products
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ProductResponse'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -275,36 +249,6 @@ paths:
         '500':
           $ref: '#/components/responses/500InternalServerError'
 
-  /users/{userId}/history/top-expensive:
-    get:
-      summary: Fetch top 4 most expensive single products purchased historically by user
-      operationId: getTopExpensivePurchases
-      security:
-        - BearerAuth: []
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Array of top 4 expensive items purchased
-          content:
-            application/json:
-              schema:
-                type: array
-                maxItems: 4
-                items:
-                  $ref: '#/components/schemas/ProductResponse'
-        '401':
-          $ref: '#/components/responses/401Unauthorized'
-        '404':
-          $ref: '#/components/responses/404NotFound'
-        '500':
-          $ref: '#/components/responses/500InternalServerError'
-
   /carts:
     post:
       summary: Initialize a new shopping cart
@@ -346,7 +290,7 @@ paths:
             format: uuid
       responses:
         '200':
-          description: Detailed cart details
+          description: Shoping cart details
           content:
             application/json:
               schema:
@@ -381,7 +325,7 @@ paths:
 
   /carts/{cartId}/items:
     post:
-      summary: Add an item to the cart
+      summary: Add an item to the cart or increase quantity
       operationId: addItemToCart
       security:
         - BearerAuth: []
@@ -414,7 +358,7 @@ paths:
 
   /carts/{cartId}/items/{productId}:
     delete:
-      summary: Remove a product completely or decrease quantity from cart
+      summary: Remove a product completely
       operationId: removeItemFromCart
       security:
         - BearerAuth: []
@@ -478,7 +422,7 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: Secure all routes using a validated JWT Token.
+      description: Secure routes using a validated JWT Token.
 
   responses:
     400BadRequest:
@@ -486,28 +430,28 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorModel'
+            $ref: '#/components/schemas/ErrorDetail'
     401Unauthorized:
       description: Authorization header missing or validation failed.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorModel'
+            $ref: '#/components/schemas/ErrorDetail'
     404NotFound:
       description: Requested domain entity could not be found.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorModel'
+            $ref: '#/components/schemas/ErrorDetail'
     500InternalServerError:
       description: Internal Server Error.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorModel'
+            $ref: '#/components/schemas/ErrorDetail'
 
   schemas:
-    ErrorModel:
+    ErrorDetail:
       type: object
       required: [code, message, timestamp]
       additionalProperties: false
@@ -565,6 +509,7 @@ components:
           type: string
           minLength: 2
           maxLength: 100
+          pattern: '^[a-zA-Z0-9\s,-]+$'
         price:
           type: number
           minimum: 0.01
@@ -619,7 +564,7 @@ components:
 
     CartResponse:
       type: object
-      required: [id, userId, cartType, items, rawSubTotal, finalTotal, discountApplied, status]
+      required: [id, userId, cartType, items, rawSubTotal, finalTotal, discountApplied, checkedOut]
       additionalProperties: false
       properties:
         id:
@@ -641,17 +586,16 @@ components:
           type: number
         discountApplied:
           type: number
-        status:
-          type: string
-          enum: [ACTIVE, CHECKED_OUT]
+        checkedOut:
+          type: boolean
 
     CheckoutResponse:
       type: object
-      required: [orderId, status]
+      required: [orderId, checkedOut]
       additionalProperties: false
       properties:
         orderId:
           type: string
           format: uuid
-        status:
-          type: string
+        checkedOut:
+          type: boolean

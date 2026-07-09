@@ -9,7 +9,7 @@ import com.vass.shop.infrastructure.adapters.inbound.rest.dto.CartCreationReques
 import com.vass.shop.infrastructure.adapters.inbound.rest.dto.CartItemRequest;
 import com.vass.shop.infrastructure.adapters.inbound.rest.dto.CartResponse;
 import com.vass.shop.infrastructure.adapters.inbound.rest.dto.CheckoutResponse;
-import com.vass.shop.infrastructure.adapters.inbound.rest.dto.ErrorModel;
+import com.vass.shop.infrastructure.adapters.inbound.rest.dto.ErrorDetail;
 import java.util.UUID;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,14 +35,14 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-08T22:59:31.432094100+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-09T17:26:00.241978700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
 @Validated
 @Tag(name = "carts", description = "the carts API")
 public interface CartsApi {
 
     String PATH_ADD_ITEM_TO_CART = "/carts/{cartId}/items";
     /**
-     * POST /carts/{cartId}/items : Add an item to the cart
+     * POST /carts/{cartId}/items : Add an item to the cart or increase quantity
      *
      * @param cartId  (required)
      * @param cartItemRequest  (required)
@@ -53,19 +53,19 @@ public interface CartsApi {
      */
     @Operation(
         operationId = "addItemToCart",
-        summary = "Add an item to the cart",
+        summary = "Add an item to the cart or increase quantity",
         responses = {
             @ApiResponse(responseCode = "200", description = "Item added or updated", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = CartResponse.class))
             }),
             @ApiResponse(responseCode = "401", description = "Authorization header missing or validation failed.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "404", description = "Requested domain entity could not be found.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "500", description = "Internal Server Error.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             })
         },
         security = {
@@ -102,13 +102,13 @@ public interface CartsApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = CheckoutResponse.class))
             }),
             @ApiResponse(responseCode = "401", description = "Authorization header missing or validation failed.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "404", description = "Requested domain entity could not be found.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "500", description = "Internal Server Error.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             })
         },
         security = {
@@ -143,13 +143,13 @@ public interface CartsApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = CartResponse.class))
             }),
             @ApiResponse(responseCode = "401", description = "Authorization header missing or validation failed.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "404", description = "Requested domain entity could not be found.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "500", description = "Internal Server Error.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             })
         },
         security = {
@@ -183,13 +183,13 @@ public interface CartsApi {
         responses = {
             @ApiResponse(responseCode = "204", description = "Cart deleted successfully"),
             @ApiResponse(responseCode = "401", description = "Authorization header missing or validation failed.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "404", description = "Requested domain entity could not be found.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "500", description = "Internal Server Error.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             })
         },
         security = {
@@ -211,7 +211,7 @@ public interface CartsApi {
      * GET /carts/{cartId} : Get cart state with computed pricing rules
      *
      * @param cartId  (required)
-     * @return Detailed cart details (status code 200)
+     * @return Shoping cart details (status code 200)
      *         or Authorization header missing or validation failed. (status code 401)
      *         or Requested domain entity could not be found. (status code 404)
      *         or Internal Server Error. (status code 500)
@@ -220,17 +220,17 @@ public interface CartsApi {
         operationId = "getCart",
         summary = "Get cart state with computed pricing rules",
         responses = {
-            @ApiResponse(responseCode = "200", description = "Detailed cart details", content = {
+            @ApiResponse(responseCode = "200", description = "Shoping cart details", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = CartResponse.class))
             }),
             @ApiResponse(responseCode = "401", description = "Authorization header missing or validation failed.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "404", description = "Requested domain entity could not be found.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "500", description = "Internal Server Error.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             })
         },
         security = {
@@ -249,7 +249,7 @@ public interface CartsApi {
 
     String PATH_REMOVE_ITEM_FROM_CART = "/carts/{cartId}/items/{productId}";
     /**
-     * DELETE /carts/{cartId}/items/{productId} : Remove a product completely or decrease quantity from cart
+     * DELETE /carts/{cartId}/items/{productId} : Remove a product completely
      *
      * @param cartId  (required)
      * @param productId  (required)
@@ -260,19 +260,19 @@ public interface CartsApi {
      */
     @Operation(
         operationId = "removeItemFromCart",
-        summary = "Remove a product completely or decrease quantity from cart",
+        summary = "Remove a product completely",
         responses = {
             @ApiResponse(responseCode = "200", description = "Item removed successfully", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = CartResponse.class))
             }),
             @ApiResponse(responseCode = "401", description = "Authorization header missing or validation failed.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "404", description = "Requested domain entity could not be found.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             }),
             @ApiResponse(responseCode = "500", description = "Internal Server Error.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetail.class))
             })
         },
         security = {

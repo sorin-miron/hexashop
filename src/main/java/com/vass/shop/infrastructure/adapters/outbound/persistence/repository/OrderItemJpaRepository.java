@@ -10,13 +10,8 @@ import java.util.UUID;
 
 public interface OrderItemJpaRepository extends JpaRepository<OrderItemEntity, UUID> {
 
-    @Query(value = """
-        SELECT DISTINCT p.id, p.name, p.price FROM order_items oi
-        JOIN orders o ON oi.order_id = o.id
-        JOIN products p ON oi.product_id = p.id
-        WHERE o.user_id = :userId
-        ORDER BY p.price DESC
-        LIMIT 4
-        """, nativeQuery = true)
-    List<Object[]> findTop4MostExpensiveProductsByUserId(@Param("userId") UUID userId);
+    @Query(value = "SELECT DISTINCT ON (product_price, product_id) * " +
+            "FROM orders WHERE user_id = :userId " +
+            "ORDER BY product_price DESC LIMIT 4", nativeQuery = true)
+    List<OrderItemEntity> getTopExpensivePurchases(@Param("userId") UUID userId);
 }
