@@ -4,8 +4,6 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import java.time.OffsetDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -20,15 +18,14 @@ import jakarta.annotation.Generated;
  * ErrorDetail
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-09T23:19:45.189516700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-12T14:09:38.843192700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
 public class ErrorDetail {
 
   private Integer code;
 
   private String message;
 
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime timestamp;
+  private String timestamp;
 
   public ErrorDetail() {
     super();
@@ -37,7 +34,7 @@ public class ErrorDetail {
   /**
    * Constructor with only required parameters
    */
-  public ErrorDetail(Integer code, String message, OffsetDateTime timestamp) {
+  public ErrorDetail(Integer code, String message, String timestamp) {
     this.code = code;
     this.message = message;
     this.timestamp = timestamp;
@@ -75,7 +72,7 @@ public class ErrorDetail {
    * Get message
    * @return message
    */
-  @NotNull @Pattern(regexp = "^[a-zA-Z0-9 ]+$") @Size(max = 255) 
+  @NotNull @Pattern(regexp = "^[a-zA-Z0-9 ]+$") @Size(min = 1, max = 255) 
   @Schema(name = "message", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("message")
   public String getMessage() {
@@ -87,7 +84,7 @@ public class ErrorDetail {
     this.message = message;
   }
 
-  public ErrorDetail timestamp(OffsetDateTime timestamp) {
+  public ErrorDetail timestamp(String timestamp) {
     this.timestamp = timestamp;
     return this;
   }
@@ -96,15 +93,15 @@ public class ErrorDetail {
    * Get timestamp
    * @return timestamp
    */
-  @NotNull @Valid 
+  @NotNull @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.*$") @Size(min = 1, max = 50) 
   @Schema(name = "timestamp", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("timestamp")
-  public OffsetDateTime getTimestamp() {
+  public String getTimestamp() {
     return timestamp;
   }
 
   @JsonProperty("timestamp")
-  public void setTimestamp(OffsetDateTime timestamp) {
+  public void setTimestamp(String timestamp) {
     this.timestamp = timestamp;
   }
 

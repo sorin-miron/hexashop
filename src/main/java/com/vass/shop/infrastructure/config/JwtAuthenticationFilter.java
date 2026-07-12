@@ -19,6 +19,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     public JwtAuthenticationFilter(JwtTokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
+//        System.out.println("Token " + tokenProvider.generateDemoToken("test2"));
     }
 
     @Override

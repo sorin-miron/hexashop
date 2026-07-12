@@ -24,6 +24,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	runtimeOnly 'org.postgresql:postgresql'
 
     // OpenAPI generation prerequisites
@@ -62,7 +63,7 @@ tasks.named('test') {
 
 sonar {
     properties {
-        property "sonar.projectKey", "shopping-cart-service"
+        property "sonar.projectKey", "hexagon-shopping-cart-service"
         property "sonar.projectName", "Secure Shopping Cart Service"
         property "sonar.qualitygate.wait", "true"
     }

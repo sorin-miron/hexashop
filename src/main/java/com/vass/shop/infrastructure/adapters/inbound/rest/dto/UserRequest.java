@@ -18,7 +18,7 @@ import jakarta.annotation.Generated;
  * UserRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-09T23:19:45.189516700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-12T14:09:38.843192700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
 public class UserRequest {
 
   private String username;
@@ -70,7 +70,7 @@ public class UserRequest {
    * Get email
    * @return email
    */
-  @NotNull @Size(max = 100) @Email
+  @NotNull @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$") @Size(min = 6, max = 100) @Email
   @Schema(name = "email", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("email")
   public String getEmail() {

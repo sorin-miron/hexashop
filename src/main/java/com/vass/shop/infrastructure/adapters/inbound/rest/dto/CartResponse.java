@@ -25,7 +25,7 @@ import jakarta.annotation.Generated;
  * CartResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-09T23:19:45.189516700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-12T14:09:38.843192700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
 public class CartResponse {
 
   private UUID id;
@@ -196,9 +196,11 @@ public class CartResponse {
 
   /**
    * Get rawSubTotal
+   * minimum: 0
+   * maximum: 1.0E+7
    * @return rawSubTotal
    */
-  @NotNull @Valid 
+  @NotNull @Valid @DecimalMin(value = "0") @DecimalMax(value = "1.0E+7") 
   @Schema(name = "rawSubTotal", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("rawSubTotal")
   public BigDecimal getRawSubTotal() {
@@ -217,9 +219,11 @@ public class CartResponse {
 
   /**
    * Get finalTotal
+   * minimum: 0
+   * maximum: 1.0E+7
    * @return finalTotal
    */
-  @NotNull @Valid 
+  @NotNull @Valid @DecimalMin(value = "0") @DecimalMax(value = "1.0E+7") 
   @Schema(name = "finalTotal", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("finalTotal")
   public BigDecimal getFinalTotal() {
@@ -238,9 +242,11 @@ public class CartResponse {
 
   /**
    * Get discountApplied
+   * minimum: 0
+   * maximum: 1000000.0
    * @return discountApplied
    */
-  @NotNull @Valid 
+  @NotNull @Valid @DecimalMin(value = "0") @DecimalMax(value = "1000000.0") 
   @Schema(name = "discountApplied", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("discountApplied")
   public BigDecimal getDiscountApplied() {

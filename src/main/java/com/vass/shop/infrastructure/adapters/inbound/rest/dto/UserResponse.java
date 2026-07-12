@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  * UserResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-09T23:19:45.189516700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-12T14:09:38.843192700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
 public class UserResponse {
 
   private UUID id;
@@ -74,7 +74,7 @@ public class UserResponse {
    * Get username
    * @return username
    */
-  @NotNull 
+  @NotNull @Pattern(regexp = "^[a-zA-Z0-9_]+$") @Size(min = 3, max = 50) 
   @Schema(name = "username", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("username")
   public String getUsername() {
@@ -95,7 +95,7 @@ public class UserResponse {
    * Get email
    * @return email
    */
-  @NotNull 
+  @NotNull @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$") @Size(min = 6, max = 100) 
   @Schema(name = "email", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("email")
   public String getEmail() {

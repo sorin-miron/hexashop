@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  * CartItemResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-09T23:19:45.189516700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-12T14:09:38.843192700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
 public class CartItemResponse {
 
   private ProductResponse product;
@@ -70,9 +70,11 @@ public class CartItemResponse {
 
   /**
    * Get quantity
+   * minimum: 0
+   * maximum: 100
    * @return quantity
    */
-  @NotNull 
+  @NotNull @Min(value = 0) @Max(value = 100) 
   @Schema(name = "quantity", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("quantity")
   public Integer getQuantity() {
@@ -91,9 +93,11 @@ public class CartItemResponse {
 
   /**
    * Get subTotal
+   * minimum: 0
+   * maximum: 1000000.0
    * @return subTotal
    */
-  @NotNull @Valid 
+  @NotNull @Valid @DecimalMin(value = "0") @DecimalMax(value = "1000000.0") 
   @Schema(name = "subTotal", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("subTotal")
   public BigDecimal getSubTotal() {

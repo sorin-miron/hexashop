@@ -45,6 +45,7 @@ paths:
           schema:
             type: string
             format: uuid
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       responses:
         '200':
           description: User details found
@@ -70,6 +71,7 @@ paths:
           schema:
             type: string
             format: uuid
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       requestBody:
         required: true
         content:
@@ -103,6 +105,7 @@ paths:
           schema:
             type: string
             format: uuid
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       responses:
         '204':
           description: User deleted successfully
@@ -126,6 +129,7 @@ paths:
           schema:
             type: string
             format: uuid
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       responses:
         '200':
           description: Array of top 4 expensive items purchased
@@ -182,6 +186,7 @@ paths:
           schema:
             type: string
             format: uuid
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       responses:
         '200':
           description: Product details found
@@ -207,6 +212,7 @@ paths:
           schema:
             type: string
             format: uuid
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       requestBody:
         required: true
         content:
@@ -240,6 +246,7 @@ paths:
           schema:
             type: string
             format: uuid
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       responses:
         '204':
           description: Product deleted successfully
@@ -289,6 +296,7 @@ paths:
           schema:
             type: string
             format: uuid
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       responses:
         '200':
           description: Shoping cart details
@@ -314,6 +322,7 @@ paths:
           schema:
             type: string
             format: uuid
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       responses:
         '204':
           description: Cart deleted successfully
@@ -337,6 +346,7 @@ paths:
           schema:
             type: string
             format: uuid
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       requestBody:
         required: true
         content:
@@ -370,12 +380,14 @@ paths:
           schema:
             type: string
             format: uuid
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
         - name: productId
           in: path
           required: true
           schema:
             type: string
             format: uuid
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       responses:
         '200':
           description: Item removed successfully
@@ -403,6 +415,7 @@ paths:
           schema:
             type: string
             format: uuid
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       responses:
         '200':
           description: Checkout finalized
@@ -463,11 +476,14 @@ components:
           maximum: 599
         message:
           type: string
+          minLength: 1
           maxLength: 255
           pattern: '^[a-zA-Z0-9 ]+$'
         timestamp:
           type: string
-          format: date-time
+          minLength: 1
+          maxLength: 50
+          pattern: '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.*$'
 
     UserRequest:
       type: object
@@ -482,7 +498,9 @@ components:
         email:
           type: string
           format: email
+          minLength: 6
           maxLength: 100
+          pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         isVip:
           type: boolean
 
@@ -494,10 +512,17 @@ components:
         id:
           type: string
           format: uuid
+          pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
         username:
           type: string
+          minLength: 3
+          maxLength: 50
+          pattern: '^[a-zA-Z0-9_]+$'
         email:
           type: string
+          minLength: 6
+          maxLength: 100
+          pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         isVip:
           type: boolean
 
@@ -524,10 +549,16 @@ components:
         id:
           type: string
           format: uuid
+          pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
         name:
           type: string
+          minLength: 2
+          maxLength: 100
+          pattern: '^[a-zA-Z0-9\s,-]+$'
         price:
           type: number
+          minimum: 0.01
+          maximum: 100000.00
 
     CartCreationRequest:
       type: object
@@ -537,6 +568,7 @@ components:
         userId:
           type: string
           format: uuid
+          pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
 
     CartItemRequest:
       type: object
@@ -546,6 +578,7 @@ components:
         productId:
           type: string
           format: uuid
+          pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
         quantity:
           type: integer
           minimum: 1
@@ -560,8 +593,12 @@ components:
           $ref: '#/components/schemas/ProductResponse'
         quantity:
           type: integer
+          minimum: 0
+          maximum: 100
         subTotal:
           type: number
+          minimum: 0
+          maximum: 1000000.00
 
     CartResponse:
       type: object
@@ -571,9 +608,11 @@ components:
         id:
           type: string
           format: uuid
+          pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
         userId:
           type: string
           format: uuid
+          pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
         cartType:
           type: string
           enum: [NORMAL, VIP]
@@ -583,10 +622,16 @@ components:
             $ref: '#/components/schemas/CartItemResponse'
         rawSubTotal:
           type: number
+          minimum: 0
+          maximum: 10000000.00
         finalTotal:
           type: number
+          minimum: 0
+          maximum: 10000000.00
         discountApplied:
           type: number
+          minimum: 0
+          maximum: 1000000.00
         checkedOut:
           type: boolean
 
@@ -598,5 +643,6 @@ components:
         orderId:
           type: string
           format: uuid
+          pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
         checkedOut:
           type: boolean

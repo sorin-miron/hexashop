@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  * ProductResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-09T23:19:45.189516700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-07-12T14:09:38.843192700+03:00[Europe/Bucharest]", comments = "Generator version: 7.23.0")
 public class ProductResponse {
 
   private UUID id;
@@ -72,7 +72,7 @@ public class ProductResponse {
    * Get name
    * @return name
    */
-  @NotNull 
+  @NotNull @Pattern(regexp = "^[a-zA-Z0-9\\s,-]+$") @Size(min = 2, max = 100) 
   @Schema(name = "name", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {
@@ -91,9 +91,11 @@ public class ProductResponse {
 
   /**
    * Get price
+   * minimum: 0.01
+   * maximum: 100000.0
    * @return price
    */
-  @NotNull @Valid 
+  @NotNull @Valid @DecimalMin(value = "0.01") @DecimalMax(value = "100000.0") 
   @Schema(name = "price", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("price")
   public BigDecimal getPrice() {
