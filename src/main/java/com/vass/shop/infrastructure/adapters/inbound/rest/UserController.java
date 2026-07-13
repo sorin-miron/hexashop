@@ -1,6 +1,6 @@
 package com.vass.shop.infrastructure.adapters.inbound.rest;
 
-import com.vass.shop.application.ports.inbound.UserUseCase;
+import com.vass.shop.domain.ports.inbound.UserUseCase;
 import com.vass.shop.domain.model.Product;
 import com.vass.shop.domain.model.User;
 import com.vass.shop.infrastructure.adapters.inbound.rest.api.UsersApi;

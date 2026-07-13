@@ -1,8 +1,8 @@
 package com.vass.shop.application.service;
 
-import com.vass.shop.application.ports.inbound.UserUseCase;
-import com.vass.shop.application.ports.outbound.OrderRepositoryPort;
-import com.vass.shop.application.ports.outbound.UserRepositoryPort;
+import com.vass.shop.domain.ports.inbound.UserUseCase;
+import com.vass.shop.domain.ports.outbound.OrderRepositoryPort;
+import com.vass.shop.domain.ports.outbound.UserRepositoryPort;
 import com.vass.shop.domain.exception.ResourceNotFoundException;
 import com.vass.shop.domain.model.Product;
 import com.vass.shop.domain.model.User;

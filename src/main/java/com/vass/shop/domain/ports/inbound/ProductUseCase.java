@@ -1,4 +1,4 @@
-package com.vass.shop.application.ports.inbound;
+package com.vass.shop.domain.ports.inbound;
 
 import com.vass.shop.domain.model.Product;
 

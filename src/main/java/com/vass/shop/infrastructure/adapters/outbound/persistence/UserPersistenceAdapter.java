@@ -1,6 +1,6 @@
 package com.vass.shop.infrastructure.adapters.outbound.persistence;
 
-import com.vass.shop.application.ports.outbound.UserRepositoryPort;
+import com.vass.shop.domain.ports.outbound.UserRepositoryPort;
 import com.vass.shop.domain.model.User;
 import com.vass.shop.infrastructure.adapters.outbound.persistence.entity.UserEntity;
 import com.vass.shop.infrastructure.adapters.outbound.persistence.repository.UserJPARepository;

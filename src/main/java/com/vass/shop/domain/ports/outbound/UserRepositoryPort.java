@@ -1,4 +1,4 @@
-package com.vass.shop.application.ports.outbound;
+package com.vass.shop.domain.ports.outbound;
 
 import com.vass.shop.domain.model.User;
 

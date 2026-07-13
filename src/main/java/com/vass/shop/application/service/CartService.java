@@ -1,10 +1,10 @@
 package com.vass.shop.application.service;
 
-import com.vass.shop.application.ports.inbound.CartUseCase;
-import com.vass.shop.application.ports.outbound.CartRepositoryPort;
-import com.vass.shop.application.ports.outbound.OrderRepositoryPort;
-import com.vass.shop.application.ports.outbound.ProductRepositoryPort;
-import com.vass.shop.application.ports.outbound.UserRepositoryPort;
+import com.vass.shop.domain.ports.inbound.CartUseCase;
+import com.vass.shop.domain.ports.outbound.CartRepositoryPort;
+import com.vass.shop.domain.ports.outbound.OrderRepositoryPort;
+import com.vass.shop.domain.ports.outbound.ProductRepositoryPort;
+import com.vass.shop.domain.ports.outbound.UserRepositoryPort;
 import com.vass.shop.domain.exception.ResourceNotFoundException;
 import com.vass.shop.domain.model.*;
 import com.vass.shop.domain.service.PricingEngine;

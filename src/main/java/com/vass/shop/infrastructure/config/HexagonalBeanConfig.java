@@ -1,9 +1,9 @@
 package com.vass.shop.infrastructure.config;
 
-import com.vass.shop.application.ports.outbound.CartRepositoryPort;
-import com.vass.shop.application.ports.outbound.OrderRepositoryPort;
-import com.vass.shop.application.ports.outbound.ProductRepositoryPort;
-import com.vass.shop.application.ports.outbound.UserRepositoryPort;
+import com.vass.shop.domain.ports.outbound.CartRepositoryPort;
+import com.vass.shop.domain.ports.outbound.OrderRepositoryPort;
+import com.vass.shop.domain.ports.outbound.ProductRepositoryPort;
+import com.vass.shop.domain.ports.outbound.UserRepositoryPort;
 import com.vass.shop.application.service.CartService;
 import com.vass.shop.application.service.ProductService;
 import com.vass.shop.application.service.UserService;

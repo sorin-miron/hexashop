@@ -1,6 +1,6 @@
 package com.vass.shop.infrastructure.adapters.outbound.persistence;
 
-import com.vass.shop.application.ports.outbound.CartRepositoryPort;
+import com.vass.shop.domain.ports.outbound.CartRepositoryPort;
 import com.vass.shop.domain.model.Cart;
 import com.vass.shop.domain.model.CartItem;
 import com.vass.shop.domain.model.Product;

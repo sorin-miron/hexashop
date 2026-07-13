@@ -1,7 +1,7 @@
 package com.vass.shop.application.service;
 
-import com.vass.shop.application.ports.inbound.ProductUseCase;
-import com.vass.shop.application.ports.outbound.ProductRepositoryPort;
+import com.vass.shop.domain.ports.inbound.ProductUseCase;
+import com.vass.shop.domain.ports.outbound.ProductRepositoryPort;
 import com.vass.shop.domain.exception.ResourceNotFoundException;
 import com.vass.shop.domain.model.Product;
 

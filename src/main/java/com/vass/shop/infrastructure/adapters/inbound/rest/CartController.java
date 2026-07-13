@@ -1,6 +1,6 @@
 package com.vass.shop.infrastructure.adapters.inbound.rest;
 
-import com.vass.shop.application.ports.inbound.CartUseCase;
+import com.vass.shop.domain.ports.inbound.CartUseCase;
 import com.vass.shop.domain.model.Cart;
 import com.vass.shop.domain.service.PricingEngine;
 import com.vass.shop.infrastructure.adapters.inbound.rest.api.CartsApi;
