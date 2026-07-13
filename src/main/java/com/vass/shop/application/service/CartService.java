@@ -5,6 +5,7 @@ import com.vass.shop.application.ports.outbound.CartRepositoryPort;
 import com.vass.shop.application.ports.outbound.OrderRepositoryPort;
 import com.vass.shop.application.ports.outbound.ProductRepositoryPort;
 import com.vass.shop.application.ports.outbound.UserRepositoryPort;
+import com.vass.shop.domain.exception.ResourceNotFoundException;
 import com.vass.shop.domain.model.*;
 import com.vass.shop.domain.service.PricingEngine;
 
@@ -28,7 +29,7 @@ public class CartService implements CartUseCase {
     @Override
     public Cart createCart(UUID userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         CartType type = user.isVip() ? CartType.VIP : CartType.NORMAL;
         Cart cart = new Cart(UUID.randomUUID(), userId, type);
         return cartRepository.save(cart);
@@ -37,7 +38,7 @@ public class CartService implements CartUseCase {
     @Override
     public Cart getCart(UUID cartId) {
         return cartRepository.findById(cartId)
-                .orElseThrow(() -> new RuntimeException("Cart not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
     }
 
     @Override
@@ -50,7 +51,7 @@ public class CartService implements CartUseCase {
         ensureCartExists(cartId);
         Cart cart = getCart(cartId);
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
         cart.addItem(product, quantity);
         return cartRepository.save(cart);
     }
@@ -84,7 +85,7 @@ public class CartService implements CartUseCase {
 
     private void ensureCartExists(UUID cartId) {
         if (!cartRepository.existsById(cartId)) {
-            throw new RuntimeException("Cart not found with ID: " + cartId);
+            throw new ResourceNotFoundException("Cart not found with ID: " + cartId);
         }
     }
 }

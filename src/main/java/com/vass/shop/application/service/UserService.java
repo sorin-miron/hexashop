@@ -3,6 +3,7 @@ package com.vass.shop.application.service;
 import com.vass.shop.application.ports.inbound.UserUseCase;
 import com.vass.shop.application.ports.outbound.OrderRepositoryPort;
 import com.vass.shop.application.ports.outbound.UserRepositoryPort;
+import com.vass.shop.domain.exception.ResourceNotFoundException;
 import com.vass.shop.domain.model.Product;
 import com.vass.shop.domain.model.User;
 
@@ -27,13 +28,13 @@ public class UserService implements UserUseCase {
     @Override
     public User getUser(UUID id) {
         return userRepositoryPort.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
     }
 
     @Override
     public User updateUser(UUID id, User user) {
         if (!userRepositoryPort.existsById(id)) {
-            throw new RuntimeException("User not found with ID: " + id);
+            throw new ResourceNotFoundException("User not found with ID: " + id);
         }
         User updatedUser = new User(id, user.username(), user.email(), user.isVip());
         return userRepositoryPort.save(updatedUser);
@@ -42,7 +43,7 @@ public class UserService implements UserUseCase {
     @Override
     public void deleteUser(UUID id) {
         if (!userRepositoryPort.existsById(id)) {
-            throw new RuntimeException("User not found with ID: " + id);
+            throw new ResourceNotFoundException("User not found with ID: " + id);
         }
         userRepositoryPort.deleteById(id);
     }
@@ -50,7 +51,7 @@ public class UserService implements UserUseCase {
     @Override
     public List<Product> getTopExpensivePurchases(UUID userId) {
         if (!userRepositoryPort.existsById(userId)) {
-            throw new RuntimeException("User not found with ID: " + userId);
+            throw new ResourceNotFoundException("User not found with ID: " + userId);
         }
         return orderRepositoryPort.getTopExpensivePurchases(userId);
     }
